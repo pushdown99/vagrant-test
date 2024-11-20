@@ -24,7 +24,8 @@ Vagrant.configure("2") do |config|
 
     c.vm.hostname=master
     c.vm.synced_folder ".", "/vagrant", disabled: true
+    c.vm.network "private_network"
     c.vm.network "forwarded_port", guest: 22, host: "#{port}0", auto_correct: true, id: "ssh"
-    #c.vm.provision 'shell', path: "bootstrap.sh"
+    c.vm.provision 'shell', path: "bootstrap.sh"
   end
 end
