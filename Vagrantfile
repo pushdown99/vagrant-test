@@ -7,24 +7,25 @@ num = 2
 ip = '192.168.0.10'
 broad = '192.168.0.255'
 port = 1003
-master = "test"
+host = "test"
 
 Vagrant.configure("2") do |config|
-  config.vm.define master do |c|
+  config.vm.define host do |c|
     c.vm.disk :disk, size: "40GB", name: "os", primary: true
     c.vm.disk :disk, size: "40GB", name: "cinder", primary: false
     c.vm.box=box
     c.vm.box_version = ver
     c.vm.provider :hyperv do |v|
-      v.vmname=master
+      v.vmname=host
       v.cpus=1
       v.memory=1024
       v.linked_clone=true
     end
 
-    c.vm.hostname=master
+    c.vm.hostname=host
     c.vm.synced_folder ".", "/vagrant", disabled: true
     c.vm.network "private_network"
+    c.vm.network "public_network", type: "dhcp", bridge: "eth0"
     c.vm.network "forwarded_port", guest: 22, host: "#{port}0", auto_correct: true, id: "ssh"
     c.vm.provision 'shell', path: "bootstrap.sh"
   end
