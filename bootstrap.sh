@@ -1,4 +1,5 @@
 #!/bin/bash
+# https://medium.com/btech-engineering/install-openstack-aio-with-kolla-ansible-in-ubuntu-2b98fc9de4ce
 
 parted /dev/sdb mklabel msdos
 parted /dev/sdb mkpart primary ext4 0% 100%
@@ -91,8 +92,21 @@ echo '\$ipaddr \$host' >> /etc/hosts
 . venv/bin/activate
 kolla-genpwd
 
-
 EOF
 
 sudo chmod +x kolla.sh
+
+cat <<EOF | sudo tee deploy.sh
+#!/bin/bash
+
+ansible -i all-in-one all -m ping &&
+kolla-ansible install-deps &&
+kolla-ansible -i all-in-one bootstrap-servers &&
+kolla-ansible -i all-in-one prechecks &&
+kolla-ansible -i all-in-one deploy &&
+kolla-ansible -i all-in-one post-deploy 
+EOF
+
+sudo chmod +x deploy.sh
+
 chown -R vagrant:vagrant .
