@@ -1,7 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-box = "boxen/ubuntu-20.04"
+#box = "boxen/ubuntu-20.04"
+#ver = "2024.07.24.10"
+# https://discourse.ubuntu.com/t/single-node-guided/35765
+box = "boxen/ubuntu-22.04"
 ver = "2024.07.24.10"
 num = 2
 ip = '192.168.0.10'
