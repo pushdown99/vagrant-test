@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
     c.vm.box_version = ver
     c.vm.provider :hyperv do |v|
       v.vmname=host
-      v.cpus=4
-      v.memory=6144
+      v.cpus=2
+      v.memory=4096
       v.linked_clone=true
     end
 
