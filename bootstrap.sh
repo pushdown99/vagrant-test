@@ -84,10 +84,10 @@ sed -i 's/stable\/yoga/unmaintained\/yoga/g' venv/share/kolla-ansible/requiremen
 # https://bugs.launchpad.net/kolla-ansible/+bug/2015497
 sed -i 's/set -o pipefail &&/set -o pipefail && sleep 10 &&/g' venv/share/kolla-ansible/ansible/roles/nova-cell/handlers/main.yml
 sed -i 's/libvirt_enable_sasl: true/libvirt_enable_sasl: false/g' venv/share/kolla-ansible/ansible/roles/nova-cell/defaults/main.yml
-sed -i '/\$ipaddr/d' /etc/hosts
 
 host=\`hostname\`
-echo '\$ipaddr \$host' >> /etc/hosts
+sudo sed -i '/\$host/d' /etc/hosts
+echo '\$ipaddr \$host' | sudo tee -a /etc/hosts
 
 . venv/bin/activate
 kolla-genpwd
