@@ -25,15 +25,15 @@ pip install docker
 pip install 'ansible>=4,<6'
 pip install kolla-ansible==14.2.0
 
-sudo mkdir /etc/kollausername=`whoami`
+username='vagrant'
 
 sudo mkdir /etc/kolla
 sudo cp -r venv/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
 sudo cp -r venv/share/kolla-ansible/ansible/inventory/* .
 sudo mv /etc/kolla/globals.yml /etc/kolla/globals.yml.bak
 
-sudo chown -R $username:$username venv
-sudo chown -R $username:$username /etc/kolla
+sudo chown -R \$username:\$username venv
+sudo chown -R \$username:\$username /etc/kolla
 EOF
 
 sudo chmod +x install.sh
@@ -41,8 +41,8 @@ sudo chmod +x install.sh
 cat <<EOF | sudo tee kolla.sh
 #!/bin/bash
 
-ipaddr=\`ip addr show eth0 | grep "inet\\b" | awk '{print \$2}' | cut -d/ -f1\`
-num=\`ip addr show eth0 | grep "inet\\b" | awk \'{print \$2}\' | cut -d\/ -f1 | cut -d\\. -f4\`
+ipaddr=\`ip addr show eth0 | grep 'inet\\b' | awk '{print \$2}' | cut -d/ -f1\`
+num=\`ip addr show eth0 | grep 'inet\\b' | awk '{print \$2}' | cut -d/ -f1 | cut -d\\. -f4\`
 num1=\$((\$num+1))
 num2=\$((\$num+2))
 
@@ -54,8 +54,8 @@ kolla_base_distro: "ubuntu"
 kolla_install_type: "source"
 openstack_release: "yoga"
 
-kolla_internal_vip_address: "$ip1"
-kolla_external_vip_address: "$ip2"
+kolla_internal_vip_address: "\$ip1"
+kolla_external_vip_address: "\$ip2"
 network_interface: "eth0"
 neutron_external_interface: "eth0"
 neutron_plugin_agent: "openvswitch"
