@@ -41,13 +41,13 @@ sudo chmod +x install.sh
 cat <<EOF | sudo tee kolla.sh
 #!/bin/bash
 
-ipaddr=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
-num=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1 | cut -d\. -f4`
-num1=$(($num+1))
-num2=$(($num+2))
+ipaddr=\`ip addr show eth0 | grep "inet\\b" | awk '{print \$2}' | cut -d/ -f1\`
+num=\`ip addr show eth0 | grep "inet\\b" | awk \'{print \$2}\' | cut -d\/ -f1 | cut -d\\. -f4\`
+num1=\$((\$num+1))
+num2=\$((\$num+2))
 
-ip1="${ipaddr//$num/$num1}"
-ip2="${ipaddr//$num/$num2}"
+ip1="\${ipaddr//\$num/\$num1}"
+ip2="\${ipaddr//\$num/\$num2}"
 
 cat << EOL | sudo tee /etc/kolla/globals.yml
 kolla_base_distro: "ubuntu"
